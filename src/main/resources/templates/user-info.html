@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <title>PP_3.1.3 - Пользователь</title>
+    </head>
+    <body>
+        <h2>ИНФОРМАЦИЯ О ПОЛЬЗОВАТЕЛЕ</h2>
+        <form action="saveUser" th:object="${user}" method="post">
+            <input type="hidden" th:field="${id}"/>
+            Имя: <input type="text" th:field="${name}"/>
+            <br><br>
+            Фамилия: <input type="text" th:field="${surname}"/>
+            <br><br>
+            Возраст: <input type="text" th:field="${age}"/>
+            <br><br>
+            <input type="submit" value="OK"/>
+        </form>
+    </body>
+</html>

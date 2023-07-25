@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <title>pp_3.1.2 - Пользователи</title>
+    </head>
+    <body>
+        <h2>ПОЛЬЗОВАТЕЛИ</h2>
+        <br>
+        <table border="1" style="border-collapse: collapse">
+            <tr>
+                <th>Имя</th>
+                <th>Фамилия</th>
+                <th>Возраст</th>
+            </tr>
+            <tr th:each="usr : ${allUsers}">
+                <form th:action="@{/updateInfo}" method="post">
+                    <input type="hidden" name="usrId" th:value="${usr.id}"/>
+                    <td th:text="${usr.name}"></td>
+                    <td th:text="${usr.surname}"></td>
+                    <td align="right" th:text="${usr.age}"></td>
+                    <td align="center">
+                        <button type="submit">...</button>
+                    </td>
+                </form>
+                <form th:action="@{/deleteUser}" method="post">
+                    <input type="hidden" name="usrId" th:value="${usr.id}"/>
+                    <td>
+                        <button type="submit">X</button>
+                    </td>
+                </form>
+            </tr>
+        </table>
+        <br>
+        <form th:action="@{/addNewUser}" method="get">
+            <button type="submit">+</button>
+        </form>
+    </body>
+</html>
