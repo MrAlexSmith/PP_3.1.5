@@ -33,7 +33,7 @@ public class AppController {
     public String addNewUser(Model model) {
         User user = new User();
         model.addAttribute("user", user);
-        return "user-info1";
+        return "user-info";
     }
 
     @PostMapping("/saveUser")
@@ -46,7 +46,7 @@ public class AppController {
     public String updateUser(@RequestParam("usrId") int id, Model model) {
         User user = userService.getUser(id);
         model.addAttribute("user", user);
-        return "user-info1";
+        return "user-info";
     }
 
     @RequestMapping("/deleteUser")

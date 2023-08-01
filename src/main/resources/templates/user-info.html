@@ -8,11 +8,11 @@
         <h2>ИНФОРМАЦИЯ О ПОЛЬЗОВАТЕЛЕ</h2>
         <form action="saveUser" th:object="${user}" method="post">
             <input type="hidden" th:field="${id}"/>
-            Имя: <input type="text" th:field="${name}"/>
+            <label>Имя: <input type="text" th:field="${name}"/></label>
             <br><br>
-            Фамилия: <input type="text" th:field="${surname}"/>
+            <label>Фамилия: <input type="text" th:field="${surname}"/></label>
             <br><br>
-            Возраст: <input type="text" th:field="${age}"/>
+            <label>Возраст: <input type="text" th:field="${age}"/></label>
             <br><br>
             <input type="submit" value="OK"/>
         </form>

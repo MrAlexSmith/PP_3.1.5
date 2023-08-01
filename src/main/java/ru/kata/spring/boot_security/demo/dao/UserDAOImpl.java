@@ -4,6 +4,7 @@ import ru.kata.spring.boot_security.demo.models.User;
 
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.Query;
+
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
