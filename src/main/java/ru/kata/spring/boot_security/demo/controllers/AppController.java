@@ -22,11 +22,6 @@ public class AppController {
         this.userService = userService;
     }
 
-    @GetMapping("/")
-    public String showIndex() {
-        return "index1";
-    }
-
     @GetMapping("/all-users")
     public String showAllUsers(Model model) {
         List<User> allUsers = userService.getAllUsers();
