@@ -10,21 +10,30 @@ import jakarta.persistence.JoinTable;
 import jakarta.persistence.ManyToMany;
 import jakarta.persistence.Table;
 
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
+
+import java.util.Collection;
 import java.util.Set;
 
 @Entity
 @Table(name = "users")
-public class User {
+public class User implements UserDetails {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
     private long id;
 
-    @Column(name = "username")
+    @Column(name = "username",
+            nullable = false,
+            unique = true
+    )
     private String username;
 
-    @Column(name = "password")
+    @Column(name = "password",
+            nullable = false
+    )
     private String password;
 
     @Column(name = "name")
@@ -64,16 +73,43 @@ public class User {
         this.id = id;
     }
 
+    @Override
+    public boolean isAccountNonExpired() {
+        return false;
+    }
+
+    @Override
+    public String getPassword() {
+        return password;
+    }
+
+    @Override
     public String getUsername() {
         return username;
     }
 
-    public void setUsername(String username) {
-        this.username = username;
+    @Override
+    public boolean isAccountNonLocked() {
+        return false;
     }
 
-    public String getPassword() {
-        return password;
+    @Override
+    public boolean isCredentialsNonExpired() {
+        return false;
+    }
+
+    @Override
+    public boolean isEnabled() {
+        return false;
+    }
+
+    @Override
+    public Collection<? extends GrantedAuthority> getAuthorities() {
+        return null;
+    }
+
+    public void setUsername(String username) {
+        this.username = username;
     }
 
     public void setPassword(String password) {
