@@ -5,7 +5,12 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.JoinTable;
+import jakarta.persistence.ManyToMany;
 import jakarta.persistence.Table;
+
+import java.util.Set;
 
 @Entity
 @Table(name = "users")
@@ -31,15 +36,24 @@ public class User {
     @Column(name = "age")
     private byte age;
 
+    @ManyToMany
+    @JoinTable(
+            name = "user_roles",
+            joinColumns = @JoinColumn(name = "user_id"),
+            inverseJoinColumns = @JoinColumn(name = "role_id")
+    )
+    private Set<Role> roleSet;
+
     public User() {
     }
 
-    public User(String username, String password, String name, String surname, byte age) {
+    public User(String username, String password, String name, String surname, byte age, Set<Role> roleSet) {
         this.username = username;
         this.password = password;
         this.name = name;
         this.surname = surname;
         this.age = age;
+        this.roleSet = roleSet;
     }
 
     public long getId() {
@@ -90,6 +104,14 @@ public class User {
         this.age = age;
     }
 
+    public Set<Role> getRoleSet() {
+        return roleSet;
+    }
+
+    public void setRoleSet(Set<Role> roleSet) {
+        this.roleSet = roleSet;
+    }
+
     @Override
     public String toString() {
         return "User{" +
@@ -99,6 +121,7 @@ public class User {
                 ", name='" + name + '\'' +
                 ", surname='" + surname + '\'' +
                 ", age=" + age +
+                ", roleSet=" + roleSet +
                 '}';
     }
 }
