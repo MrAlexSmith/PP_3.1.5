@@ -16,6 +16,12 @@ public class User {
     @Column(name = "id")
     private long id;
 
+    @Column(name = "username")
+    private String username;
+
+    @Column(name = "password")
+    private String password;
+
     @Column(name = "name")
     private String name;
 
@@ -28,10 +34,12 @@ public class User {
     public User() {
     }
 
-    public User(String name, String surname, byte age) {
-        this.name    = name;
+    public User(String username, String password, String name, String surname, byte age) {
+        this.username = username;
+        this.password = password;
+        this.name = name;
         this.surname = surname;
-        this.age     = age;
+        this.age = age;
     }
 
     public long getId() {
@@ -40,6 +48,22 @@ public class User {
 
     public void setId(long id) {
         this.id = id;
+    }
+
+    public String getUsername() {
+        return username;
+    }
+
+    public void setUsername(String username) {
+        this.username = username;
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
     }
 
     public String getName() {
@@ -69,10 +93,12 @@ public class User {
     @Override
     public String toString() {
         return "User{" +
-               "id=" + id +
-               ", name='" + name + '\'' +
-               ", surname='" + surname + '\'' +
-               ", age=" + age +
-               '}';
+                "id=" + id +
+                ", username='" + username + '\'' +
+                ", password='" + password + '\'' +
+                ", name='" + name + '\'' +
+                ", surname='" + surname + '\'' +
+                ", age=" + age +
+                '}';
     }
 }
