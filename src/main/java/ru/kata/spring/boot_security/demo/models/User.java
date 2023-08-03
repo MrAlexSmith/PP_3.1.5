@@ -10,39 +10,45 @@ import jakarta.persistence.JoinTable;
 import jakarta.persistence.ManyToMany;
 import jakarta.persistence.Table;
 
-import org.springframework.security.core.GrantedAuthority;
-import org.springframework.security.core.userdetails.UserDetails;
+import jakarta.validation.constraints.Max;
+import jakarta.validation.constraints.Min;
+import jakarta.validation.constraints.NotEmpty;
+import jakarta.validation.constraints.Size;
 
-import java.util.Collection;
 import java.util.Set;
 
 @Entity
 @Table(name = "users")
-public class User implements UserDetails {
+public class User {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
     private long id;
 
-    @Column(name = "username",
-            nullable = false,
-            unique = true
-    )
+    @Column(name = "username", unique = true)
+    @NotEmpty(message = "Логин не может быть пустым!")
+    @Size(min = 2, max = 100, message = "Логин должен содержать от 2 до 100 символов!")
     private String username;
 
-    @Column(name = "password",
-            nullable = false
-    )
+    @Column(name = "password", nullable = false)
+    @NotEmpty(message = "Пароль не может быть пустым!")
+    @Min(value = 3, message = "Пароль должен содержать минимум 3 символа")
     private String password;
 
     @Column(name = "name")
+    @NotEmpty(message = "Имя не может быть пустым!")
+    @Max(value = 255, message = "Имя не может содержать более 255 символов!")
     private String name;
 
     @Column(name = "surname")
+    @NotEmpty(message = "Фамилия не может быть пустой!")
+    @Max(value = 255, message = "Фамилия не может содержать более 255 символов!")
     private String surname;
 
     @Column(name = "age")
+    @NotEmpty(message = "Год рождения не может быть пустым!")
+    @Size(min = 1900, max = 2005, message = "Год рождения должен быть в пределе от 1900 до 2005 включительно!")
     private byte age;
 
     @ManyToMany
@@ -73,43 +79,16 @@ public class User implements UserDetails {
         this.id = id;
     }
 
-    @Override
-    public boolean isAccountNonExpired() {
-        return false;
-    }
-
-    @Override
-    public String getPassword() {
-        return password;
-    }
-
-    @Override
     public String getUsername() {
         return username;
     }
 
-    @Override
-    public boolean isAccountNonLocked() {
-        return false;
-    }
-
-    @Override
-    public boolean isCredentialsNonExpired() {
-        return false;
-    }
-
-    @Override
-    public boolean isEnabled() {
-        return false;
-    }
-
-    @Override
-    public Collection<? extends GrantedAuthority> getAuthorities() {
-        return null;
-    }
-
     public void setUsername(String username) {
         this.username = username;
+    }
+
+    public String getPassword() {
+        return password;
     }
 
     public void setPassword(String password) {
