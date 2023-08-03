@@ -28,27 +28,29 @@ public class User {
 
     @Column(name = "username", unique = true)
     @NotEmpty(message = "Логин не может быть пустым!")
-    @Size(min = 2, max = 100, message = "Логин должен содержать от 2 до 100 символов!")
+    @Size(min = 2, max = 255, message = "Логин должен содержать от 2 до 255 символов!")
     private String username;
 
-    @Column(name = "password", nullable = false)
+    @Column(name = "password")
     @NotEmpty(message = "Пароль не может быть пустым!")
-    @Min(value = 3, message = "Пароль должен содержать минимум 3 символа")
+    @Size(min = 3, max = 255, message = "Пароль должен содержать минимум 3 символа")
     private String password;
 
     @Column(name = "name")
     @NotEmpty(message = "Имя не может быть пустым!")
-    @Max(value = 255, message = "Имя не может содержать более 255 символов!")
+    @Size(max = 255, message = "Имя не может содержать более 255 символов!")
     private String name;
 
     @Column(name = "surname")
     @NotEmpty(message = "Фамилия не может быть пустой!")
-    @Max(value = 255, message = "Фамилия не может содержать более 255 символов!")
+    @Size(max = 255, message = "Фамилия не может содержать более 255 символов!")
     private String surname;
 
     @Column(name = "age")
-    @NotEmpty(message = "Год рождения не может быть пустым!")
-    @Size(min = 1900, max = 2005, message = "Год рождения должен быть в пределе от 1900 до 2005 включительно!")
+    @NotEmpty(message = "Возраст не может быть пустым!")
+    @Size(min = 18, max = 61, message = "")
+    @Min(value = 18, message = "Возраст не может быть меньше 18 лет!")
+    @Max(value = 61, message = "Возраст не может быть больше 61 года!")
     private byte age;
 
     @ManyToMany

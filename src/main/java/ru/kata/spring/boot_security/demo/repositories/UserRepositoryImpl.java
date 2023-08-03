@@ -1,20 +1,24 @@
-package ru.kata.spring.boot_security.demo.dao;
+package ru.kata.spring.boot_security.demo.repositories;
 
 import ru.kata.spring.boot_security.demo.models.User;
 
 import jakarta.persistence.EntityManager;
+import jakarta.persistence.NoResultException;
 import jakarta.persistence.Query;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
+import java.util.Optional;
 
 @Repository
-public class UserDAOImpl implements UserDAO{
+public class UserRepositoryImpl implements UserRepository {
 
     private final EntityManager entityManager;
 
-    public UserDAOImpl(EntityManager entityManager) {
+    @Autowired
+    public UserRepositoryImpl(EntityManager entityManager) {
         this.entityManager = entityManager;
     }
 
@@ -38,5 +42,17 @@ public class UserDAOImpl implements UserDAO{
         Query query = entityManager.createQuery("delete from User where id =:userId");
         query.setParameter("userId", id);
         query.executeUpdate();
+    }
+
+    @Override
+    public Optional<User> findByUsername(String username) {
+        Query query = entityManager.createQuery("SELECT u FROM User u WHERE u.username = :username");
+        query.setParameter("username", username);
+        try {
+            User result = (User) query.getSingleResult();
+            return Optional.ofNullable(result);
+        } catch (NoResultException e) {
+            return Optional.empty();
+        }
     }
 }
