@@ -1,8 +1,7 @@
 package ru.kata.spring.boot_security.demo.securities;
 
-import ru.kata.spring.boot_security.demo.models.Role;
-
 import org.springframework.security.core.GrantedAuthority;
+import ru.kata.spring.boot_security.demo.models.Role;
 
 public class GrantedAuthorityImpl implements GrantedAuthority {
     private final Role role;
@@ -13,6 +12,6 @@ public class GrantedAuthorityImpl implements GrantedAuthority {
 
     @Override
     public String getAuthority() {
-        return null;
+        return role.getName();
     }
 }

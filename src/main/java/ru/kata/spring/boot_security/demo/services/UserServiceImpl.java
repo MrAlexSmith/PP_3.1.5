@@ -47,11 +47,13 @@ public class UserServiceImpl implements UserService, UserDetailsService {
     }
 
     @Override
+    @Transactional
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
         Optional<User> user = userRepository.findByUsername(username);
 
-        if (user.isEmpty())
-            throw new UsernameNotFoundException("Неверный логин и/или пароль!");
+        if (user.isEmpty()) {
+            throw new UsernameNotFoundException(String.format("Пользователь '%s' не зарегистрирован!", username));
+        }
 
         return new UserDetailsImpl(user.get());
     }

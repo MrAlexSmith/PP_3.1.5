@@ -1,11 +1,14 @@
 package ru.kata.spring.boot_security.demo.securities;
 
+import ru.kata.spring.boot_security.demo.models.Role;
 import ru.kata.spring.boot_security.demo.models.User;
 
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import java.util.Collection;
+import java.util.HashSet;
+import java.util.Set;
 
 public class UserDetailsImpl implements UserDetails {
     private final User user;
@@ -16,7 +19,11 @@ public class UserDetailsImpl implements UserDetails {
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        return null;
+        Set<GrantedAuthority> grantedAuthoritySet = new HashSet<>();
+        for (Role role : user.getRoleSet()) {
+            grantedAuthoritySet.add(new GrantedAuthorityImpl(role));
+        }
+        return grantedAuthoritySet;
     }
 
     @Override

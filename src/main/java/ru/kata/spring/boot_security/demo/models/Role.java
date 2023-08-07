@@ -7,6 +7,8 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
 
+import jakarta.validation.constraints.NotEmpty;
+
 @Entity
 @Table(name = "roles")
 public class Role {
@@ -16,14 +18,15 @@ public class Role {
     @Column(name = "id")
     private int id;
 
-    @Column(name = "role")
-    private String role;
+    @Column(name = "name", unique = true)
+    @NotEmpty(message = "Наименование роли не может быть пустым!")
+    private String name;
 
     public Role() {
     }
 
-    public Role(String role) {
-        this.role = role;
+    public Role(String name) {
+        this.name = name;
     }
 
     public int getId() {
@@ -34,19 +37,19 @@ public class Role {
         this.id = id;
     }
 
-    public String getRole() {
-        return role;
+    public String getName() {
+        return name;
     }
 
-    public void setRole(String role) {
-        this.role = role;
+    public void setName(String name) {
+        this.name = name;
     }
 
     @Override
     public String toString() {
         return "Role{" +
                 "id=" + id +
-                ", role='" + role + '\'' +
+                ", name='" + name + '\'' +
                 '}';
     }
 }

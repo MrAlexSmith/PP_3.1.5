@@ -2,6 +2,7 @@ package ru.kata.spring.boot_security.demo.models;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
@@ -14,6 +15,10 @@ import jakarta.validation.constraints.Max;
 import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.Size;
+import org.hibernate.annotations.Fetch;
+import org.hibernate.annotations.FetchMode;
+import org.hibernate.annotations.LazyCollection;
+import org.hibernate.annotations.LazyCollectionOption;
 
 import java.util.Set;
 
@@ -53,24 +58,29 @@ public class User {
     @Max(value = 61, message = "Возраст не может быть больше 61 года!")
     private byte age;
 
-    @ManyToMany
-    @JoinTable(
-            name = "user_roles",
+    @ManyToMany(fetch = FetchType.LAZY)
+    @LazyCollection(LazyCollectionOption.EXTRA)
+    @Fetch(FetchMode.JOIN)
+    @JoinTable(name = "users_roles",
             joinColumns = @JoinColumn(name = "user_id"),
-            inverseJoinColumns = @JoinColumn(name = "role_id")
-    )
+            inverseJoinColumns = @JoinColumn(name = "role_id"))
     private Set<Role> roleSet;
+
+    @Column(name = "enabled")
+    @NotEmpty
+    private boolean enabled;
 
     public User() {
     }
 
-    public User(String username, String password, String name, String surname, byte age, Set<Role> roleSet) {
+    public User(String username, String password, String name, String surname, byte age, Set<Role> roleSet, boolean enabled) {
         this.username = username;
         this.password = password;
-        this.name = name;
-        this.surname = surname;
-        this.age = age;
-        this.roleSet = roleSet;
+        this.name     = name;
+        this.surname  = surname;
+        this.age      = age;
+        this.roleSet  = roleSet;
+        this.enabled  = enabled;
     }
 
     public long getId() {
@@ -129,6 +139,14 @@ public class User {
         this.roleSet = roleSet;
     }
 
+    public boolean isEnabled() {
+        return enabled;
+    }
+
+    public void setEnabled(boolean enabled) {
+        this.enabled = enabled;
+    }
+
     @Override
     public String toString() {
         return "User{" +
@@ -139,6 +157,7 @@ public class User {
                 ", surname='" + surname + '\'' +
                 ", age=" + age +
                 ", roleSet=" + roleSet +
+                ", enabled=" + enabled +
                 '}';
     }
 }

@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import java.security.Principal;
 import java.util.List;
 
 @Controller
@@ -24,7 +25,7 @@ public class AppController {
         this.userService = userService;
     }
 
-    @GetMapping("/all-users")
+    @GetMapping("/admin")
     public String showAllUsers(Model model) {
         List<User> allUsers = userService.getAllUsers();
         model.addAttribute("allUsers", allUsers);
@@ -45,9 +46,10 @@ public class AppController {
     }
 
     @RequestMapping("/updateInfo")
-    public String updateUser(@RequestParam("usrId") int id, Model model) {
+    public String updateUser(@RequestParam("usrId") int id, Model model, Principal principal) {
         User user = userService.getUser(id);
         model.addAttribute("user", user);
+        System.out.println(principal.getName()); // имя аутентифицированного пользователя
         return "user-info";
     }
 
