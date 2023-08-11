@@ -53,10 +53,9 @@ public class UserDetailsImpl implements UserDetails {
 
     @Override
     public boolean isEnabled() {
-        return true;
+        return this.user.isEnabled();
     }
 
-    // Для получения данных аутентифицированного пользователя
     public User getUser() {
         return this.user;
     }

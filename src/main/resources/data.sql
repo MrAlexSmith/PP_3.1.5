@@ -5,7 +5,7 @@ INSERT INTO roles (name) VALUES ('ROLE_USER');
 -- Вставка данных в таблицу users
 INSERT INTO users (username, password, name, surname, age, enabled)
         VALUES ('admin',
-                '{bcrypt}$2a$12$uhNxSAmsPvykFNhY7WChjOJHdVJWGWo.XDvOTbg7d14Bog5KIwTi2',
+                '$2a$12$8qy7ZuKzFN7e0WHd24Er1OylWhO0ygvB0v7OK6BEomLmfWvSNdsXC',
                 'admin',
                 'admin',
                 35,
@@ -13,15 +13,15 @@ INSERT INTO users (username, password, name, surname, age, enabled)
                 );
 INSERT INTO users (username, password, name, surname, age, enabled)
         VALUES ('alex',
-                '{bcrypt}$2a$12$uhNxSAmsPvykFNhY7WChjOJHdVJWGWo.XDvOTbg7d14Bog5KIwTi2',
+                '$2a$12$8qy7ZuKzFN7e0WHd24Er1OylWhO0ygvB0v7OK6BEomLmfWvSNdsXC',
                 'Alex',
                 'Smith',
                 50,
-                true
+                false
                 );
 INSERT INTO users (username, password, name, surname, age, enabled)
         VALUES ('akovalev',
-                '{bcrypt}$2a$12$uhNxSAmsPvykFNhY7WChjOJHdVJWGWo.XDvOTbg7d14Bog5KIwTi2',
+                '$2a$12$8qy7ZuKzFN7e0WHd24Er1OylWhO0ygvB0v7OK6BEomLmfWvSNdsXC',
                 'Александр',
                 'Ковалёв',
                 50,

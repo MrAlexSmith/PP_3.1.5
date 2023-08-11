@@ -1,5 +1,9 @@
 package ru.kata.spring.boot_security.demo.controllers;
 
+import org.springframework.context.annotation.Bean;
+import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import ru.kata.spring.boot_security.demo.models.User;
 import ru.kata.spring.boot_security.demo.services.UserService;
 
@@ -42,7 +46,7 @@ public class AppController {
     @PostMapping("/saveUser")
     public String saveUser(@ModelAttribute("user") User user) {
         userService.saveUser(user);
-        return "redirect:/all-users";
+        return "redirect:/admin";
     }
 
     @RequestMapping("/updateInfo")
@@ -56,6 +60,6 @@ public class AppController {
     @RequestMapping("/deleteUser")
     public String deleteUser(@RequestParam("usrId") int id) {
         userService.deleteUser(id);
-        return "redirect:/all-users";
+        return "redirect:/admin";
     }
 }

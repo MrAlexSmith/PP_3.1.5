@@ -12,6 +12,8 @@
                 <th>Имя</th>
                 <th>Фамилия</th>
                 <th>Возраст</th>
+                <th>Логин</th>
+                <th>Доступ</th>
             </tr>
             <tr th:each="usr : ${allUsers}">
                 <form th:action="@{/updateInfo}" method="post">
@@ -19,6 +21,10 @@
                     <td th:text="${usr.name}"></td>
                     <td th:text="${usr.surname}"></td>
                     <td align="right" th:text="${usr.age}"></td>
+                    <td th:text="${usr.username}"></td>
+                    <td align="center">
+                        <input type="checkbox" name="enabled" th:checked="${usr.enabled}" th:disabled="true"/>
+                    </td>
                     <td align="center">
                         <button type="submit">...</button>
                     </td>
