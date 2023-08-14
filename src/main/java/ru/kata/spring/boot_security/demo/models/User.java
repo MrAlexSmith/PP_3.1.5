@@ -158,4 +158,18 @@ public class User {
                 ", enabled=" + enabled +
                 '}';
     }
+
+    public String getRoleSetToString() {
+        String stringRoleSet = "";
+
+        for (Role role : roleSet) {
+            if (!stringRoleSet.isEmpty()) {
+                stringRoleSet += ", ";
+            }
+            String roleName = role.getName().replace("ROLE_", "");
+            stringRoleSet += "\"" + roleName + "\"";
+        }
+
+        return stringRoleSet;
+    }
 }
