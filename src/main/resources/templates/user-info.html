@@ -7,20 +7,41 @@
     <body>
         <h2>ИНФОРМАЦИЯ О ПОЛЬЗОВАТЕЛЕ</h2>
         <form action="saveUser" th:object="${user}" method="post">
-            <input type="hidden" th:field="${id}"/>
-            <label>Имя: <input type="text" th:field="${name}"/></label>
+            <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}" />
+            <input type="hidden" th:field="*{id}"/>
+            <label>Логин: <input type="text" th:field="*{username}" placeholder="Введите логин" tabindex="1"/></label>
+            <div style="color: red" th:if="${#fields.hasErrors('username')}" th:errors="*{username}"></div>
             <br><br>
-            <label>Фамилия: <input type="text" th:field="${surname}"/></label>
+            <label>Пароль: <input type="password" th:field="*{password}" tabindex="2"/></label>
+            <div style="color: red" th:if="${#fields.hasErrors('password')}" th:errors="*{password}"></div>
             <br><br>
-            <label>Возраст: <input type="text" th:field="${age}"/></label>
+            <label for="listRoles">Роли:</label>
+            <select id="listRoles" name="listRoles" multiple required  tabindex="3">
+                <option th:each="role : ${allRoles}"
+                        th:value="${role.name}"
+                        th:selected="${user != null and user.roleSet != null and user.roleSet.contains(role)}">
+                    <span th:text="${role.name}"></span>
+                </option>
+            </select>
+            <br/><br/>
+            <label>Имя: <input type="text" th:field="*{name}" placeholder="Введите имя" tabindex="4"/></label>
+            <div style="color: red" th:if="${#fields.hasErrors('name')}" th:errors="*{name}"></div>
             <br><br>
-            <label>Логин: <input type="text" th:field="${username}"/></label>
+            <label>Фамилия: <input type="text" th:field="*{surname}" placeholder="Введите фамилию" tabindex="5"/></label>
+            <div style="color: red" th:if="${#fields.hasErrors('surname')}" th:errors="*{surname}"></div>
             <br><br>
-            <label>Пароль: <input type="password" th:field="${password}"/></label>
+            <label>Возраст: <input type="text" th:field="*{age}" tabindex="6"/></label>
+            <div style="color: red" th:if="${#fields.hasErrors('age')}" th:errors="*{age}"></div>
             <br><br>
-            <label>Доступ: <input type="checkbox" th:field="${enabled}"/></label>
-            <br><br>
-            <input type="submit" value="OK"/>
+            <label>Доступ: <input type="checkbox" th:field="*{enabled}" tabindex="7"/></label>
+            <br/><br/>
+            <input type="submit" value="OK" tabindex="8" th:hidden="${hidden}"/>
         </form>
+        <br/>
+        <form th:action="@{/cancel}" method="get">
+            <button type="submit" tabindex="9" th:hidden="${hidden}">Отмена</button>
+        </form>
+        <br/><br/>
+        <p>Для выхода из приложения нажмите <a th:href="@{/logoutapp}">здесь</a>.</p>
     </body>
 </html>

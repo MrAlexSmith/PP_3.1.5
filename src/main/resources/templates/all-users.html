@@ -9,22 +9,24 @@
         <br>
         <table border="1" style="border-collapse: collapse">
             <tr>
+                <th>Логин</th>
+                <th>Роли</th>
+                <th>Доступ</th>
                 <th>Имя</th>
                 <th>Фамилия</th>
                 <th>Возраст</th>
-                <th>Логин</th>
-                <th>Доступ</th>
             </tr>
             <tr th:each="usr : ${allUsers}">
                 <form th:action="@{/updateInfo}" method="post">
                     <input type="hidden" name="usrId" th:value="${usr.id}"/>
-                    <td th:text="${usr.name}"></td>
-                    <td th:text="${usr.surname}"></td>
-                    <td align="right" th:text="${usr.age}"></td>
                     <td th:text="${usr.username}"></td>
+                    <td th:text="${usr.getRoleSetToString()}"></td>
                     <td align="center">
                         <input type="checkbox" name="enabled" th:checked="${usr.enabled}" th:disabled="true"/>
                     </td>
+                    <td th:text="${usr.name}"></td>
+                    <td th:text="${usr.surname}"></td>
+                    <td align="right" th:text="${usr.age}"></td>
                     <td align="center">
                         <button type="submit">...</button>
                     </td>
@@ -42,6 +44,6 @@
             <button type="submit">+</button>
         </form>
         <br/>
-        <p>Для выхода из приложения нажмите <a href="/logout">здесь</a>.</p>
+        <p>Для выхода из приложения нажмите <a th:href="@{/logoutapp}">здесь</a>.</p>
     </body>
 </html>

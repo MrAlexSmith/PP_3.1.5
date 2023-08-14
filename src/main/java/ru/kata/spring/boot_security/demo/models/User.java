@@ -52,8 +52,8 @@ public class User {
     private String surname;
 
     @Column(name = "age")
-    @NotEmpty(message = "Возраст не может быть пустым!")
-    @Size(min = 18, max = 61, message = "")
+//    @NotEmpty(message = "Возраст не может быть пустым!")
+//    @Size(min = 18, max = 61, message = "")
     @Min(value = 18, message = "Возраст не может быть меньше 18 лет!")
     @Max(value = 61, message = "Возраст не может быть больше 61 года!")
     private byte age;
@@ -67,7 +67,6 @@ public class User {
     private Set<Role> roleSet;
 
     @Column(name = "enabled")
-    @NotEmpty
     private boolean enabled;
 
     public User() {
@@ -160,4 +159,19 @@ public class User {
                 ", enabled=" + enabled +
                 '}';
     }
+
+    public String getRoleSetToString() {
+        String stringRoleSet = "";
+
+        for (Role role : roleSet) {
+            if (!stringRoleSet.isEmpty()) {
+                stringRoleSet += ", ";
+            }
+            String roleName = role.getName().replace("ROLE_", "");
+            stringRoleSet += "\"" + roleName + "\"";
+        }
+
+        return stringRoleSet;
+    }
+
 }

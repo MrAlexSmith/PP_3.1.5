@@ -30,5 +30,6 @@ INSERT INTO users (username, password, name, surname, age, enabled)
 
 -- Вставка данных в таблицу user_roles
 INSERT INTO users_roles (user_id, role_id) VALUES (1, 1);
+INSERT INTO users_roles (user_id, role_id) VALUES (1, 2);
 INSERT INTO users_roles (user_id, role_id) VALUES (2, 1);
 INSERT INTO users_roles (user_id, role_id) VALUES (3, 2);

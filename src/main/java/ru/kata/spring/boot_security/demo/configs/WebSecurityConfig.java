@@ -32,20 +32,21 @@ public class WebSecurityConfig {
                         .requestMatchers("/",
                                          "/index")
                                                 .permitAll()
-                        .requestMatchers("/updateInfo").hasRole("ADMIN")
+                        .requestMatchers("/updateInfo").hasAnyRole("ADMIN", "USER")
                         .requestMatchers("/admin",
                                          "/addNewUser",
                                          "/saveUser",
                                          "/deleteUser").hasRole("ADMIN")
-                        .anyRequest().authenticated()
+                        .anyRequest().permitAll()
                 )
                 .formLogin(formLogin -> formLogin
                         .successHandler(successUserHandler)
                         .permitAll()
                 )
                 .logout(logout -> logout
+                        .logoutUrl("/logoutapp")
+                        .logoutSuccessUrl("/logout-success")
                         .permitAll()
-                        .logoutSuccessUrl("/")
                 );
 
         return http.build();
