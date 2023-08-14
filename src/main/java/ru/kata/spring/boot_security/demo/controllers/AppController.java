@@ -4,30 +4,31 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
 import jakarta.validation.Valid;
-import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.validation.BindingResult;
-import ru.kata.spring.boot_security.demo.models.Role;
-import ru.kata.spring.boot_security.demo.models.User;
-import ru.kata.spring.boot_security.demo.securities.UserDetailsImpl;
-import ru.kata.spring.boot_security.demo.services.RoleServiceImpl;
-import ru.kata.spring.boot_security.demo.services.UserService;
-
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import ru.kata.spring.boot_security.demo.services.UserServiceImpl;
-import ru.kata.spring.boot_security.demo.util.UserValidator;
 
 import java.security.Principal;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+
+import ru.kata.spring.boot_security.demo.models.Role;
+import ru.kata.spring.boot_security.demo.models.User;
+import ru.kata.spring.boot_security.demo.securities.UserDetailsImpl;
+import ru.kata.spring.boot_security.demo.services.RoleServiceImpl;
+import ru.kata.spring.boot_security.demo.services.UserService;
+import ru.kata.spring.boot_security.demo.services.UserServiceImpl;
+import ru.kata.spring.boot_security.demo.util.UserValidator;
 
 @Controller
 public class AppController {
@@ -40,8 +41,8 @@ public class AppController {
 
     @Autowired
     public AppController(UserService userService, RoleServiceImpl roleService, UserValidator userValidator) {
-        this.userService = (UserServiceImpl) userService;
-        this.roleService = roleService;
+        this.userService   = (UserServiceImpl) userService;
+        this.roleService   = roleService;
         this.userValidator = userValidator;
     }
 
@@ -70,13 +71,16 @@ public class AppController {
         userValidator.validate(user, bindingResult);
 
         if (bindingResult.hasErrors()) {
+
             List<Role> selectedRoles = new ArrayList<>();
+
             for (String roleName : listRoles) {
                 Role role = roleService.getRoleByName(roleName);
                 if (role != null) {
                     selectedRoles.add(role);
                 }
             }
+
             user.setRoleSet(new HashSet<>(selectedRoles));
             model.addAttribute("user", user);
             List<Role> allRoles = roleService.getAllRoles();
@@ -94,7 +98,6 @@ public class AppController {
         }
 
         user.setRoleSet(userRoles);
-
         userService.saveUser(user);
 
         return "redirect:/admin";
@@ -102,6 +105,7 @@ public class AppController {
 
     @RequestMapping("/updateInfo")
     public String updateUser(@RequestParam("usrId") int id, Model model, Principal principal) {
+
         User userLogin = ((UserDetailsImpl) userService.loadUserByUsername(principal.getName())).getUser();
         String roles = userLogin.getRoleSet().toString();
 
@@ -130,6 +134,7 @@ public class AppController {
 
     @RequestMapping("/cancel")
     public String cancel(Model model, Principal principal) {
+
         User userLogin = ((UserDetailsImpl) userService.loadUserByUsername(principal.getName())).getUser();
         String roles = userLogin.getRoleSet().toString();
 
@@ -147,22 +152,19 @@ public class AppController {
 
     @RequestMapping("/logoutapp")
     public String logout(HttpServletRequest request, HttpServletResponse response) {
-        // Очистка сессии
+
         HttpSession session = request.getSession(false);
         if (session != null) {
             session.invalidate();
         }
 
-        // Сброс аутентификации
         SecurityContextHolder.clearContext();
 
-
-        // Перенаправление на страницу логаута
         return "redirect:/logout-success";
     }
 
     @RequestMapping("/logout-success")
     public String logoutSuccess() {
-        return "logoutapp"; // Имя шаблона для страницы успешного выхода
+        return "logoutapp";
     }
 }

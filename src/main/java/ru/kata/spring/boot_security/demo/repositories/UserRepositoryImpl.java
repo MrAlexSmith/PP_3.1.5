@@ -1,9 +1,7 @@
 package ru.kata.spring.boot_security.demo.repositories;
 
-import org.springframework.context.annotation.Bean;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-import org.springframework.security.crypto.password.PasswordEncoder;
-import ru.kata.spring.boot_security.demo.models.User;
+import java.util.List;
+import java.util.Optional;
 
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.NoResultException;
@@ -12,8 +10,7 @@ import jakarta.persistence.Query;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
-import java.util.List;
-import java.util.Optional;
+import ru.kata.spring.boot_security.demo.models.User;
 
 @Repository
 public class UserRepositoryImpl implements UserRepository {

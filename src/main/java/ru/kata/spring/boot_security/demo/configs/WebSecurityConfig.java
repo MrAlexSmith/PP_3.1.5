@@ -22,7 +22,7 @@ public class WebSecurityConfig {
     @Autowired
     public WebSecurityConfig(SuccessUserHandler successUserHandler, UserServiceImpl userService) {
         this.successUserHandler = successUserHandler;
-        this.userService = userService;
+        this.userService        = userService;
     }
 
     @Bean

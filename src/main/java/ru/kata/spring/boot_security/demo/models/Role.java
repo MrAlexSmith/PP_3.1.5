@@ -9,8 +9,6 @@ import jakarta.persistence.Table;
 
 import jakarta.validation.constraints.NotEmpty;
 
-import java.util.Objects;
-
 @Entity
 @Table(name = "roles")
 public class Role {
