@@ -12,7 +12,8 @@
             <label>Логин: <input type="text" th:field="*{username}" placeholder="Введите логин" tabindex="1"/></label>
             <div style="color: red" th:if="${#fields.hasErrors('username')}" th:errors="*{username}"></div>
             <br><br>
-            <label>Пароль: <input type="password" th:field="*{password}" tabindex="2"/></label>
+<!--            <label>Пароль: <input type="password" th:field="*{password}" tabindex="2"/></label>-->
+            <label>Пароль: <input type="text" th:field="*{password}" tabindex="2"/></label>
             <div style="color: red" th:if="${#fields.hasErrors('password')}" th:errors="*{password}"></div>
             <br><br>
             <label for="listRoles">Роли:</label>
