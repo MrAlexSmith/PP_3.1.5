@@ -7,8 +7,6 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
 
-import jakarta.validation.constraints.NotEmpty;
-
 @Entity
 @Table(name = "roles")
 public class Role {
@@ -19,7 +17,6 @@ public class Role {
     private int id;
 
     @Column(name = "name", unique = true)
-    @NotEmpty(message = "Наименование роли не может быть пустым!")
     private String name;
 
     public Role() {

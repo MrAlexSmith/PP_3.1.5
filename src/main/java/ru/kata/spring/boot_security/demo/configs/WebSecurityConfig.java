@@ -10,6 +10,7 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 
+import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 import ru.kata.spring.boot_security.demo.services.UserServiceImpl;
 
 @Configuration
@@ -30,22 +31,24 @@ public class WebSecurityConfig {
         http
                 .authorizeHttpRequests(authorize -> authorize
                         .requestMatchers("/",
-                                         "/index")
+                                         "/index",
+                                         "/login")
                                                 .permitAll()
-                        .requestMatchers("/updateInfo").hasAnyRole("ADMIN", "USER")
-                        .requestMatchers("/admin",
-                                         "/addNewUser",
-                                         "/saveUser",
-                                         "/deleteUser").hasRole("ADMIN")
-                        .anyRequest().permitAll()
+                        .requestMatchers("/admin/**").hasRole("ADMIN")
+                        .requestMatchers("/user/**").hasAnyRole("ADMIN", "USER")
+                        .anyRequest().authenticated()
                 )
                 .formLogin(formLogin -> formLogin
+                        .loginPage("/login")
                         .successHandler(successUserHandler)
+                        .loginProcessingUrl("/login")
+                        .usernameParameter("j_login")
+                        .passwordParameter("j_password")
                         .permitAll()
                 )
                 .logout(logout -> logout
-                        .logoutUrl("/logoutapp")
-                        .logoutSuccessUrl("/logout-success")
+                        .logoutRequestMatcher(new AntPathRequestMatcher("/logout"))
+                        .logoutSuccessUrl("/login?logout")
                         .permitAll()
                 );
 

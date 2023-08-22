@@ -11,21 +11,21 @@ import jakarta.persistence.JoinTable;
 import jakarta.persistence.ManyToMany;
 import jakarta.persistence.Table;
 
+import java.util.Collection;
+import java.util.HashSet;
 import java.util.Set;
-
-import jakarta.validation.constraints.Max;
-import jakarta.validation.constraints.Min;
-import jakarta.validation.constraints.NotEmpty;
-import jakarta.validation.constraints.Size;
 
 import org.hibernate.annotations.Fetch;
 import org.hibernate.annotations.FetchMode;
-import org.hibernate.annotations.LazyCollection;
-import org.hibernate.annotations.LazyCollectionOption;
+
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
+
+import ru.kata.spring.boot_security.demo.securities.GrantedAuthorityImpl;
 
 @Entity
 @Table(name = "users")
-public class User {
+public class User implements UserDetails {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -33,52 +33,77 @@ public class User {
     private long id;
 
     @Column(name = "username", unique = true)
-    @NotEmpty(message = "Логин не может быть пустым!")
-    @Size(min = 2, max = 255, message = "Логин должен содержать от 2 до 255 символов!")
     private String username;
 
     @Column(name = "password")
-    @NotEmpty(message = "Пароль не может быть пустым!")
-    @Size(min = 3, max = 255, message = "Пароль должен содержать минимум 3 символа")
     private String password;
 
     @Column(name = "name")
-    @NotEmpty(message = "Имя не может быть пустым!")
-    @Size(max = 255, message = "Имя не может содержать более 255 символов!")
     private String name;
 
     @Column(name = "surname")
-    @NotEmpty(message = "Фамилия не может быть пустой!")
-    @Size(max = 255, message = "Фамилия не может содержать более 255 символов!")
     private String surname;
 
     @Column(name = "age")
-    @Min(value = 18, message = "Возраст не может быть меньше 18 лет!")
-    @Max(value = 61, message = "Возраст не может быть больше 61 года!")
     private byte age;
 
     @ManyToMany(fetch = FetchType.LAZY)
-    @LazyCollection(LazyCollectionOption.EXTRA)
+//    @LazyCollection(LazyCollectionOption.EXTRA) // Закомментирован по причине устаревшего метода.
     @Fetch(FetchMode.JOIN)
     @JoinTable(name = "users_roles",
             joinColumns = @JoinColumn(name = "user_id"),
             inverseJoinColumns = @JoinColumn(name = "role_id"))
     private Set<Role> roleSet;
 
-    @Column(name = "enabled")
-    private boolean enabled;
-
     public User() {
     }
 
-    public User(String username, String password, String name, String surname, byte age, Set<Role> roleSet, boolean enabled) {
+    public User(String username, String password, String name, String surname, byte age, Set<Role> roleSet) {
         this.username = username;
         this.password = password;
         this.name     = name;
         this.surname  = surname;
         this.age      = age;
         this.roleSet  = roleSet;
-        this.enabled  = enabled;
+    }
+
+    @Override
+    public String getUsername() {
+        return username;
+    }
+
+    @Override
+    public String getPassword() {
+        return password;
+    }
+
+    @Override
+    public boolean isAccountNonExpired() {
+        return false;
+    }
+
+    @Override
+    public boolean isAccountNonLocked() {
+        return false;
+    }
+
+    @Override
+    public boolean isCredentialsNonExpired() {
+        return false;
+    }
+
+    @Override
+    public boolean isEnabled() {
+        return true;
+    }
+
+    @Override
+    public Collection<? extends GrantedAuthority> getAuthorities() {
+        Set<GrantedAuthority> grantedAuthoritySet = new HashSet<>();
+        for (Role role : this.getRoleSet()) {
+            grantedAuthoritySet.add(new GrantedAuthorityImpl(role));
+        }
+        return grantedAuthoritySet;
     }
 
     public long getId() {
@@ -89,16 +114,8 @@ public class User {
         this.id = id;
     }
 
-    public String getUsername() {
-        return username;
-    }
-
     public void setUsername(String username) {
         this.username = username;
-    }
-
-    public String getPassword() {
-        return password;
     }
 
     public void setPassword(String password) {
@@ -137,14 +154,6 @@ public class User {
         this.roleSet = roleSet;
     }
 
-    public boolean isEnabled() {
-        return enabled;
-    }
-
-    public void setEnabled(boolean enabled) {
-        this.enabled = enabled;
-    }
-
     @Override
     public String toString() {
         return "User{" +
@@ -155,7 +164,6 @@ public class User {
                 ", surname='" + surname + '\'' +
                 ", age=" + age +
                 ", roleSet=" + roleSet +
-                ", enabled=" + enabled +
                 '}';
     }
 

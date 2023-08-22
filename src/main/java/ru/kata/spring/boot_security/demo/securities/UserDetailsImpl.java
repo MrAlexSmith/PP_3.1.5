@@ -53,7 +53,7 @@ public class UserDetailsImpl implements UserDetails {
 
     @Override
     public boolean isEnabled() {
-        return this.user.isEnabled();
+        return true;
     }
 
     public User getUser() {

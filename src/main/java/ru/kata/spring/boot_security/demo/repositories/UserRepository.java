@@ -13,9 +13,9 @@ public interface UserRepository {
 
     void saveUser(User user);
 
-    User getUser(int id);
+    User getUser(long id);
 
-    void deleteUser(int id);
+    void deleteUser(long id);
 
     Optional<User> findByUsername(String username);
 }

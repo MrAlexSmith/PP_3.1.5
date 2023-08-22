@@ -3,29 +3,26 @@ INSERT INTO roles (name) VALUES ('ROLE_ADMIN');
 INSERT INTO roles (name) VALUES ('ROLE_USER');
 
 -- Вставка данных в таблицу users
-INSERT INTO users (username, password, name, surname, age, enabled)
-        VALUES ('admin',
+INSERT INTO users (username, password, name, surname, age)
+        VALUES ('admin@mail.com',
                 '$2a$12$8qy7ZuKzFN7e0WHd24Er1OylWhO0ygvB0v7OK6BEomLmfWvSNdsXC',
                 'admin',
                 'admin',
-                35,
-                true
+                35
                 );
-INSERT INTO users (username, password, name, surname, age, enabled)
-        VALUES ('alex',
+INSERT INTO users (username, password, name, surname, age)
+        VALUES ('alex@mail.com',
                 '$2a$12$8qy7ZuKzFN7e0WHd24Er1OylWhO0ygvB0v7OK6BEomLmfWvSNdsXC',
                 'Alex',
                 'Smith',
-                50,
-                false
+                50
                 );
-INSERT INTO users (username, password, name, surname, age, enabled)
-        VALUES ('akovalev',
+INSERT INTO users (username, password, name, surname, age)
+        VALUES ('akovalev@mail.com',
                 '$2a$12$8qy7ZuKzFN7e0WHd24Er1OylWhO0ygvB0v7OK6BEomLmfWvSNdsXC',
                 'Александр',
                 'Ковалёв',
-                50,
-                true
+                50
                 );
 
 -- Вставка данных в таблицу user_roles

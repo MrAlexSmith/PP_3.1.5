@@ -33,12 +33,12 @@ public class UserRepositoryImpl implements UserRepository {
     }
 
     @Override
-    public User getUser(int id) {
+    public User getUser(long id) {
         return entityManager.find(User.class, id);
     }
 
     @Override
-    public void deleteUser(int id) {
+    public void deleteUser(long id) {
         Query query = entityManager.createQuery("delete from User where id =:userId");
         query.setParameter("userId", id);
         query.executeUpdate();
@@ -49,8 +49,7 @@ public class UserRepositoryImpl implements UserRepository {
         Query query = entityManager.createQuery("SELECT u FROM User u WHERE u.username = :username");
         query.setParameter("username", username);
         try {
-            User result = (User) query.getSingleResult();
-            return Optional.ofNullable(result);
+            return Optional.ofNullable((User) query.getSingleResult());
         } catch (NoResultException e) {
             return Optional.empty();
         }
