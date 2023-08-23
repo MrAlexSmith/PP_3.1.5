@@ -1,6 +1,6 @@
 ### **Группа: java_may18_2023_1**
 ### **Студент: Александр Ковалёв**
-# Java Pre-Project - Spring Boot, Security, Bootstrap
+# Java Pre-Project - Spring Boot REST + JS
 ## Практическая задача 3.1.5
 ### Логин администратора: admin@mail.com
 ### Все пользователи имеют пароль: 123
