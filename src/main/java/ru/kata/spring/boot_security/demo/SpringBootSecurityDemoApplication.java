@@ -10,6 +10,6 @@ public class SpringBootSecurityDemoApplication {
 
 	public static void main(String[] args) throws IOException {
 		SpringApplication.run(SpringBootSecurityDemoApplication.class, args);
-		Runtime.getRuntime().exec("rundll32 url.dll, FileProtocolHandler " + "http://localhost:8080/");
+		Runtime.getRuntime().exec("rundll32 url.dll, FileProtocolHandler " + "http://localhost:8080/index");
 	}
 }

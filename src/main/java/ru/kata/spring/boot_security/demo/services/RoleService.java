@@ -1,17 +1,12 @@
 package ru.kata.spring.boot_security.demo.services;
 
-import org.springframework.stereotype.Service;
 import ru.kata.spring.boot_security.demo.models.Role;
 
 import java.util.List;
+import java.util.Set;
 
-@Service
 public interface RoleService {
-    List<Role> getAllRoles();
-
-    Role getRole(String userRole);
-
-    Role getRoleById(int id);
-
-    void addRole(Role role);
+    List<Role> findAllRole();
+    void addDefaultRole();
+    Set<Role> findByIdRoles(List<Long>roles);
 }

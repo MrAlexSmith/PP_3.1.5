@@ -1,14 +1,17 @@
 package ru.kata.spring.boot_security.demo.services;
 
-import org.springframework.stereotype.Service;
 import ru.kata.spring.boot_security.demo.models.User;
 
 import java.util.List;
 
-@Service
 public interface UserService {
-    List<User> getAllUsers();
-    void saveUser(User user);
-    User getUser(long id);
-    void deleteUser(long id);
+
+    List<User> findAll ();
+    User getById(long id);
+    void save(User user);
+    void deleteById(long id);
+    User findByUsername(String username);
+    void addDefaultUser();
+    void update(User user);
+    User passwordCoder(User user);
 }
